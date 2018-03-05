@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="App" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="keyInterceptor" class="classes.interceptors.KeyInterceptor"/>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="keyInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+        
+        <action name="user" class="classes.actions.UserAction">
+            <interceptor-ref name="myStack"/>
+            <result name="success">/welcome.jsp</result>
+            <result name="error">/index.jsp</result>
+        </action>
+        
+        <action name="login" class="classes.actions.LoginAction">
+            <interceptor-ref name="params"/>
+            <interceptor-ref name="execAndWait"/>
+            <result name="success">/login-success.jsp</result>
+            <result name="error">/login-error.jsp</result>
+            <result name="wait">/login-wait.jsp</result>
+        </action>
+
+
+    </package>
+    <package name="abc" extends="struts-default">
+        <global-results>
+            <result name="myresult">/exIntrGlobalResult.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="myresult"/>
+        </global-exception-mappings>
+
+        <action name="ExceptionLogin" class="classes.actions.ExceptionLoginAction">
+            <result name="success">/exIntrWelcome.jsp</result>
+            <result name="error">/exIntrError.jsp</result>
+        </action>
+
+        <action name="userImage" class="classes.actions.FileUploadAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">102097152</param>
+                <param name="allowedTypes">
+                    image/png,image/gif,image/jpeg,image/pjpeg
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">SuccessUserImage.jsp</result>
+            <result name="input">Struts2FileUpload.jsp</result>
+        </action>
+
+        <action name="customValidation" class="classes.actions.CustomValidation">
+            <result>/customValidationWelcome.jsp</result>
+            <result name="input">/customValidationIndex.jsp</result>
+        </action>
+
+        <action name="requiredValidatorRegister" class="classes.actions.RequiredstringValidatorAction">
+            <result name="success">/requiredstringValidatorWelcome.jsp</result>
+            <result name="input">/requiredStringValidation.jsp</result>
+        </action>
+
+
+    </package>
+    <package name="cde" extends="struts-default">
+        <action name="ajaxValidation" class="classes.actions.AJAXValidationAction">
+            <interceptor-ref name="jsonValidationWorkflowStack"></interceptor-ref>
+            <result name="success">/AJAXWelcome.jsp</result>
+            <result name="input">/AJAXValidation.jsp</result>
+        </action>
+        
+        <action name="Sessionloginform">
+            <result>SessionAwareLogin.jsp</result>
+        </action>
+
+        <action name="Sessionlogin" class="classes.actions.SessionAwareLogin" method="execute">
+            <result name="success">/SessionAwareLogin-success.jsp</result>
+            <result name="login">/SessionAwareLogin-error.jsp</result>
+        </action>
+        
+        <action name="Sessionlogout" class="classes.actions.SessionAwareLogin" method="logout">
+            <result name="success">/SessionAwareLogout-success.jsp</result>
+        </action>
+
+        <action name="Sessionprofile" class="classes.actions.SessionAwareProfile" method="execute">
+            <result name="success">/SessionAwareProfile-success.jsp</result>
+            <result name="login">/SessionAwareProfile-error.jsp</result>
+        </action>
+    </package>
+    <package name="abcde" extends="struts-default">
+        <action name="first" class="classes.actions.ServletContextAwareFirst" method="execute">
+            <result>/ServletContextAwareFirstSuccess.jsp</result>
+        </action>
+        <action name="second" class="classes.actions.ServletContextAwareSecond" method="execute">
+            <result name="success">/ServletContextAwareSecondSuccess.jsp</result>
+            <result name="error">/ServletContextAwareSecondError.jsp</result>
+        </action>
+        <action name="DateTimePicker" class="classes.actions.DateTimePickerAction">
+            <result>/DateTimePickerWelcome.jsp</result>
+        </action>
+    </package>
+</struts>

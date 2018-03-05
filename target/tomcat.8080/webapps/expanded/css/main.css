@@ -1,0 +1,16 @@
+.custom{
+    color: white;
+    list-style-type: none;
+}
+.errors{
+    text-decoration-line: none;
+    background-color: black;
+    list-style-type: none;
+    color:white;
+}
+.formtext{
+    color: #000;
+}
+.errorLabel{
+    color:black !important;
+}
